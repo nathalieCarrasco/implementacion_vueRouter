@@ -22,12 +22,22 @@
                       <!-- REEMPLAZAR CON ELEMENTO ROUTER LINK A RUTA ESTÁTICA -->
                       <router-link to="/Post/1"> Post |</router-link>
                     </li>
+                    <li class="nav-item" role="presentation">
+                      <!-- REEMPLAZAR CON ELEMENTO ROUTER LINK A RUTA ESTÁTICA -->
+                      <router-link to="/Administrador/Simple">Administrador Simple |</router-link> 
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <!-- REEMPLAZAR CON ELEMENTO ROUTER LINK A RUTA ESTÁTICA -->
+                      <router-link to="/Administrador/Avanzado">Administrador Avanzado |</router-link> 
+                    </li>
                 </ul>
         </div>
         </div>
     </nav>
+     <transition name="transition"> 
     <!-- ROUTER VIEW QUE CARGARÁ LAS VISTAS (INICIO, SOBRE MÍ, CONTACTO, ETC.) -->
      <router-view></router-view> 
+     </transition>
   </div>
   
 </template>
@@ -48,8 +58,11 @@ export default {
   color: #2c3e50;
   margin-top: 60px;  
 }
-#menu-v8 a{
-  text-shadow: 1px 1px #000;
+.transition-enter-active, .transition-leave-active {
+  transition: opacity .5s;
+}
+.transition-enter, .transition-leave-to{
+  opacity: 0;
 }
 </style>
 

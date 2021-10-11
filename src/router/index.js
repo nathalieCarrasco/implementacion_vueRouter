@@ -1,29 +1,32 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import inicio from '../views/inicio.vue'
-import Sobremi from '../views/Sobremi.vue'
-import Contacto from '../views/Contacto.vue'
 import Post from '../views/Post.vue'
-import Articulo from '../views/Articulo.vue'
 import NotFound from '../views/NotFound.vue'
+import Administrador from '../views/Administrador.vue'
+import Simple from '../views/Simple.vue'
+import Avanzado from '../views/Avanzado.vue'
+import DireccionEquivocada from '../views/DireccionEquivocada.vue'
 
 Vue.use(VueRouter)
 
+// Se modifica  a las rutas el metodo de carga Lazy Loading parte 2 desafio
 const routes = [
   {
     path: '/',
     name: 'inicio',
-    component: inicio
+    component: () => import(/* webpackChunkName: 'inicio'  */ '../views/inicio.vue')
   },
   {
     path: '/Sobremi',
     name: 'Sobremi',
-    component: Sobremi
+    component: () => import(/* webpackChunkName: 'sobremi'  */ '../views/Sobremi.vue'),
+    alias: '/Acerca'
   },
   {
     path: '/Contacto',
     name: 'Contacto',
-    component: Contacto
+    component: () => import(/* webpackChunkName: 'contacto'  */ '../views/Contacto.vue'),
+    alias: '/Contactame'
   },
   {
     path: '/Post/:enter',
@@ -31,18 +34,50 @@ const routes = [
     children: [{
       path: '/Articulo',
       name: 'Articulo',
-      component: Articulo
+      component: () => import(/* webpackChunkName: 'articulo'  */ '../views/Articulo.vue')
     }]
   },
   {
     path: '*',
     component: NotFound
+  },
+  {// agregar administrador , simple y Avanzado
+    path: '/Administrador',
+    component: Administrador,
+    children: [{
+      path: '/Administrador/Simple',
+      component: Simple,
+      name: 'simple'
+    },
+    {
+      path: '/Administrador/Avanzado',
+      component: Avanzado,
+      name: 'avanzado'
+
+    },
+    {
+      path: '/Administrador/*',
+      component: DireccionEquivocada,
+      name: 'DireccionEquivocada'
+    }
+  ]
+
+  },
+  { //redirecciones del proyecto
+    path: '/home',
+    redirect: '/'
+  },
+  {
+    path: '/inicio',
+    redirect: '/'
+  },
+  {
+    path: '/portada',
+    redirect: '/'
   }
 ]
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
   routes
 })
 
